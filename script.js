@@ -1,30 +1,29 @@
 console.log('in js');
 
-var makeClickCounter = 0;
+var makeClickCounter = 0;//my clickCounter global variable
 
-$(document).ready(readyNow);
+$(document).ready(readyNow);//jquery initiation on function readyNow
 
-
-function readyNow(){
-
-//$('#generateButton').on('click', addButtons);
-$('.buttonDiv').on('click', '#generateButton', clickCounter);
-$('#generateButton').on('click').append('.buttonDiv');
-$('.buttonDiv').on('click').append('<p id="paragraph"></p>');
-
-$('#paragraph').append('<button id="swapButton">Swap</button>');
-$('#paragraph').append('<button id="deletButton">Delete</button>');
-//$('<div>').append('<p></p>');
-
-$('#swapButton').on('click').val();
-$('#deleteButton').on('click').val('');
-}; 
-
-function clickCounter() {
-console.log('in clickCounter');
-    makeClickCounter += 1;   
-    $('.buttonDiv').html('The generate button was clicked ' + makeClickCounter + ' times.');
+function readyNow(){//jquery start-up function containing event listeners
+    
+    $('#generateButton').on('click', addCounterElements);//targeting id attached to the generate button
+    $(document).on('click', '.swapButton', colorChange);//listener targeting the entire doc w/swapButton class
+    //and changeColor function initiated on the click
+    $(document).on('click', '.deleteButton', deleteDiv);
+    
 };
 
-// function addButtons() {
-// }
+function addCounterElements() {//function that adds the divs, <p>s and counter on gen button push
+    makeClickCounter += 1;//clickCounter
+    $('body').append('<div class="elementDiv"><p>' + makeClickCounter + '<button class="swapButton">Swap</button><button class="deleteButton">Delete</button></p></div>'); 
+};//targets the body, appends div&p, adds counter to <p>
+
+function colorChange() {//function called on doc click
+    $(this).parent().toggleClass('yellowDiv')//supposed to toggle on click between classes
+    //$(this).replaceWith('<button class="secondSwap">Swap</button>');
+};
+
+function deleteDiv() {
+    $(this).parent().remove();
+};
+//maybe an if statement for the class toggle?
